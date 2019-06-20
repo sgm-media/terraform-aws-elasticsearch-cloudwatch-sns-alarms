@@ -16,9 +16,9 @@ resource "aws_sns_topic" "default" {
 }
 
 locals {
-  aws_sns_topic_arn = var.sns_topic == "" ? element(concat(aws_sns_topic.default_prefix.*.arn, [""]), 0) : element(concat(aws_sns_topic.default.*.arn, [""]), 0)
+  aws_sns_topic_arn = var.sns_topic == "" ? concat(aws_sns_topic.default_prefix.*.arn, [""])[0] : concat(aws_sns_topic.default.*.arn, [""])[0]
 
-  aws_sns_topic_name = var.sns_topic == "" ? element(concat(aws_sns_topic.default_prefix.*.name, [""]), 0) : var.sns_topic
+  aws_sns_topic_name = var.sns_topic == "" ? concat(aws_sns_topic.default_prefix.*.name, [""])[0] : var.sns_topic
 }
 
 resource "aws_sns_topic_policy" "default" {
